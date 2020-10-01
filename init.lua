@@ -374,13 +374,16 @@ mnu2:setClickCallback(refreshStatus2())
 function caffeinateCallback(eventType)
     if (eventType == hs.caffeinate.watcher.systemDidWake) then
         print("systemDidWake")
+        -- restore saved settings
         setTemperatureLimit(savedTemperatureLimit)
         setTurboBoost(savedTurboBoostSetting)
         setPowerLimit(savedPowerLimit)
         setBatteryChargingLimit(savedBatteryChargingLimit)
+        setFansToAuto_user_plus()
+        -------------------------
         refreshStatus1()
         refreshStatus2()
-        setFansToAuto_user_plus()
+        
 
     -- elseif (eventType == hs.caffeinate.watcher.screensDidUnlock) then
     --     print("screensDidUnlock")
@@ -392,12 +395,15 @@ function caffeinateCallback(eventType)
         -- kill fan controller
         cmd = "sudo killall smc_fan_util"
         hs.osascript.applescript(string.format('do shell script "%s"', cmd))
-        ----
+        ----------------------
+        -- set fans to auto
+        setFansToAuto()
+        -------------------
     elseif (eventType == hs.caffeinate.watcher.systemWillPowerOff) then
         print("systemWillPowerOff")
         -- set fans to auto
         setFansToAuto()
-        ----
+        -------------------
     end
 end
 
