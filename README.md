@@ -9,5 +9,5 @@ Allows quick actions:
 - Change battery charging limits
 - Change GPU switch modes
 
-![cpu](https://github.com/charlie0129/my-hammerspoon-config/img/cpu.png)
-![other](https://github.com/charlie0129/my-hammerspoon-config/img/other.png)
+![cpu](https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/cpu.png)
+![other](https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/other.png)
