@@ -393,16 +393,16 @@ function caffeinateCallback(eventType)
 
     elseif (eventType == hs.caffeinate.watcher.systemWillSleep) then
         print("systemWillSleep")
-        -- kill fan controller
+        -- kill fan controller and set fans to auto
         cmd = "sudo killall smc_fan_util"
         hs.osascript.applescript(string.format('do shell script "%s"', cmd))
-        ----------------------
-        -- set fans to auto
         setFansToAuto()
         -------------------
     elseif (eventType == hs.caffeinate.watcher.systemWillPowerOff) then
         print("systemWillPowerOff")
-        -- set fans to auto
+        -- kill fan controller and set fans to auto
+        cmd = "sudo killall smc_fan_util"
+        hs.osascript.applescript(string.format('do shell script "%s"', cmd))
         setFansToAuto()
         -------------------
     end
