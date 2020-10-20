@@ -19,7 +19,7 @@ menuTable1 = {
     { title = "Auto (SMC+)", indent = 1, fn = function() setFansToAuto_user_plus() end },
     { title = "Completely off", indent = 1, fn = function() turnOffFans() end },
     -- { title = ".22", indent = 1, fn = function() hs.osascript.applescript(string.format('do shell script "%s"', "cd "..parentDirPathTo_smc_fan_util_Binary.."; sudo ./smc_fan_util -m 1303 1207")) end },
-    -- { title = ".27", indent = 1, fn = function() hs.osascript.applescript(string.format('do shell script "%s"', "cd "..parentDirPathTo_smc_fan_util_Binary.."; sudo ./smc_fan_util -m 1600 1482")) end },
+    { title = ".25", indent = 1, fn = function() setFansBySpeed(1481, 1372) end },
     { title = "0%", indent = 1, fn = function() setFansByPercentage(0) end },
     { title = "10%", indent = 1, fn = function() setFansByPercentage(10) end },
     { title = "20%", indent = 1, fn = function() setFansByPercentage(20) end },
@@ -184,6 +184,20 @@ function setFansByPercentage(integerPercentage)
     end
 
     cmd = "cd "..parentDirPathTo_smc_fan_util_Binary.."; sudo ./smc_fan_util -m "..tostring(integerPercentage)
+    ok = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
+    if ok == false then
+        hs.alert.show("Operation failed!")
+    end
+end
+
+function setFansBySpeed(speedL, speedR)
+    cmd = "sudo killall smc_fan_util"
+    ok = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
+    if ok == true then
+        hs.alert.show("Disabled a running instance of user-defined fan controller.")
+    end
+
+    cmd = "cd "..parentDirPathTo_smc_fan_util_Binary.."; sudo ./smc_fan_util -m "..tostring(speedL).." "..tostring(speedR)
     ok = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
     if ok == false then
         hs.alert.show("Operation failed!")
@@ -376,9 +390,9 @@ function caffeinateCallback(eventType)
     if (eventType == hs.caffeinate.watcher.systemDidWake) then
         print("systemDidWake")
         -- restore saved settings
+        setPowerLimit(savedPowerLimit)
         setTemperatureLimit(savedTemperatureLimit)
         setTurboBoost(savedTurboBoostSetting)
-        setPowerLimit(savedPowerLimit)
         setBatteryChargingLimit(savedBatteryChargingLimit)
         setFansToAuto_user_plus()
         -------------------------
