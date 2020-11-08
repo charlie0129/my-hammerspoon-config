@@ -39,8 +39,8 @@ menuTable1 = {
     { title = "-" },
     { title = "GPU Mode", disabled = true },
     { title = "Auto switch", indent = 1, fn = function() setGraphicsCardAuto(); refreshStatus1() end },
-    { title = "Integrated only", indent = 1, fn = function() setGraphicsCardIntegrated(); refreshStatus1() end },
-    { title = "Dedicated only", indent = 1, fn = function() setGraphicsCardDedicated(); refreshStatus1() end },
+    { title = "Integrated", indent = 1, fn = function() setGraphicsCardIntegrated(); refreshStatus1() end },
+    { title = "High Performance", indent = 1, fn = function() setGraphicsCardDedicated(); refreshStatus1() end },
     { title = "-" },
     { title = "Refresh status", indent = 1, fn = function() refreshStatus1() end },
     { title = "-" },
@@ -116,6 +116,42 @@ function refreshStatus2()
     end
 
     mnu2:setTitle(tostring(currentTemperatureLimit)..tostring(currentPowerLimit)..tostring(turboBoostStatusChar))
+
+    for idx, iTable in pairs(menuTable2) do
+        -- Tick temperatures
+        if string.sub(iTable["title"], -3) == "℃" then
+            if iTable["title"] == tostring(currentTemperatureLimit).."℃" then
+                iTable["checked"] = true
+            else
+                iTable["checked"] = false
+            end
+        end
+        -- Tick power limits
+        if string.sub(iTable["title"], -1) == "W" then
+            if iTable["title"] == tostring(currentPowerLimit).."W" then
+                iTable["checked"] = true
+            else
+                iTable["checked"] = false
+            end
+        end
+        -- Tick Turbo Boost status
+        if iTable["title"] == "Enable" then
+            if currentTurboBoostStatus then
+                iTable["checked"] = true
+            else
+                iTable["checked"] = false
+            end
+        end
+        if iTable["title"] == "Disable" then
+
+            if not currentTurboBoostStatus then
+                iTable["checked"] = true
+            else
+                iTable["checked"] = false
+            end
+        end
+    end
+    mnu2:setMenu(menuTable2)
 end
 
 --BATTERY--------------------------------------------------------------------------------
