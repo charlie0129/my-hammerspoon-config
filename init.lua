@@ -29,7 +29,7 @@ menuTable1 = {
     { title = "75%", indent = 1, fn = function() setFansByPercentage(75) end },
     { title = "100%", indent = 1, fn = function() setFansByPercentage(100) end },
     { title = "-" },
-    { title = "Batt. Charging Limit", disabled = true },
+    { title = "Batt. Charge Limit", disabled = true },
     { title = "50%", indent = 1, fn = function() setBatteryChargingLimit(50); refreshStatus1() end },
     { title = "55%", indent = 1, fn = function() setBatteryChargingLimit(55); refreshStatus1() end },
     { title = "60%", indent = 1, fn = function() setBatteryChargingLimit(60); refreshStatus1() end },
@@ -106,7 +106,7 @@ function refreshStatus1()
             isAfterFanSpeed = true
         end
         if isAfterFanSpeed then
-            -- Tick battery charging limits
+            -- Tick battery charge limits
             if string.sub(iTable["title"], -1) == "%" then
                 if iTable["title"] == tostring(currentBatteryChargingLimit).."%" then
                     iTable["checked"] = true
