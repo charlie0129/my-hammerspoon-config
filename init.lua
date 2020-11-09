@@ -99,6 +99,41 @@ function refreshStatus1()
     end
 
     mnu1:setTitle(tostring(currentBatteryChargingLimit)..tostring(graphicsModeChar))
+
+    isAfterFanSpeed = false
+    for idx, iTable in pairs(menuTable1) do
+        if string.sub(iTable["title"], 1, 4) == "Batt" then
+            isAfterFanSpeed = true
+        end
+        if isAfterFanSpeed then
+            -- Tick battery charging limits
+            if string.sub(iTable["title"], -1) == "%" then
+                if iTable["title"] == tostring(currentBatteryChargingLimit).."%" then
+                    iTable["checked"] = true
+                else
+                    iTable["checked"] = false
+                end
+            end
+            -- Tick graphics card mode
+            if iTable["title"] == "Auto switch" then
+                if (currentGraphicsCardMode == 0) then
+                    menuTable1[idx]["checked"] = false
+                    menuTable1[idx + 1]["checked"] = true
+                    menuTable1[idx + 2]["checked"] = false
+                elseif (currentGraphicsCardMode == 1) then
+                    menuTable1[idx]["checked"] = false
+                    menuTable1[idx + 1]["checked"] = false
+                    menuTable1[idx + 2]["checked"] = true
+                elseif (currentGraphicsCardMode == 2) then
+                    menuTable1[idx]["checked"] = true
+                    menuTable1[idx + 1]["checked"] = false
+                    menuTable1[idx + 2]["checked"] = false
+                end
+            end
+        end
+        
+    end
+    mnu1:setMenu(menuTable1)
 end
 
 function refreshStatus2()
@@ -138,16 +173,10 @@ function refreshStatus2()
         if iTable["title"] == "Enable" then
             if currentTurboBoostStatus then
                 iTable["checked"] = true
+                menuTable2[idx + 1]["checked"] = false
             else
                 iTable["checked"] = false
-            end
-        end
-        if iTable["title"] == "Disable" then
-
-            if not currentTurboBoostStatus then
-                iTable["checked"] = true
-            else
-                iTable["checked"] = false
+                menuTable2[idx + 1]["checked"] = true
             end
         end
     end
