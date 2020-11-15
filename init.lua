@@ -16,7 +16,8 @@ menuTable1 = {
     { title = "Fans", disabled = true },
     { title = "Auto (SMC)", indent = 1, fn = function() setFansToAuto() end },
     { title = "Auto (User)", indent = 1, fn = function() setFansToAuto_user() end },
-    { title = "Auto (SMC+)", indent = 1, fn = function() setFansToAuto_user_plus() end },
+    { title = "Auto (SMC+, 0)", indent = 1, fn = function() setFansToAuto_user_plus(0) end },
+    { title = "Auto (SMC+, 4)", indent = 1, fn = function() setFansToAuto_user_plus(0) end },
     { title = "Completely off", indent = 1, fn = function() turnOffFans() end },
     -- { title = ".22", indent = 1, fn = function() hs.osascript.applescript(string.format('do shell script "%s"', "cd "..parentDirPathTo_smc_fan_util_Binary.."; sudo ./smc_fan_util -m 1303 1207")) end },
     { title = ".25", indent = 1, fn = function() setFansBySpeed(1481, 1372) end },
@@ -311,13 +312,13 @@ function setFansToAuto_user()
     end
 end
 
-function setFansToAuto_user_plus()
+function setFansToAuto_user_plus(offset)
     cmd = "sudo killall smc_fan_util"
     ok = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
     if ok == true then
         hs.alert.show("Disabled a running instance of user-defined fan controller.")
     else
-        cmd = "cd "..parentDirPathTo_smc_fan_util_Binary.."; sudo ./smc_fan_util --SMC-enhanced"
+        cmd = "cd "..parentDirPathTo_smc_fan_util_Binary.."; sudo ./smc_fan_util --SMC-enhanced --offset "..tostring(offset)
         ok = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
         if ok == false then
             hs.alert.show("Operation failed!")
