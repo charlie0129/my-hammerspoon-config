@@ -17,7 +17,7 @@ menuTable1 = {
     { title = "Auto (SMC)", indent = 1, fn = function() setFansToAuto() end },
     { title = "Auto (User)", indent = 1, fn = function() setFansToAuto_user() end },
     { title = "Auto (SMC+, 0)", indent = 1, fn = function() setFansToAuto_user_plus(0) end },
-    { title = "Auto (SMC+, 4)", indent = 1, fn = function() setFansToAuto_user_plus(0) end },
+    { title = "Auto (SMC+, 4)", indent = 1, fn = function() setFansToAuto_user_plus(4) end },
     { title = "Completely off", indent = 1, fn = function() turnOffFans() end },
     -- { title = ".22", indent = 1, fn = function() hs.osascript.applescript(string.format('do shell script "%s"', "cd "..parentDirPathTo_smc_fan_util_Binary.."; sudo ./smc_fan_util -m 1303 1207")) end },
     { title = ".25", indent = 1, fn = function() setFansBySpeed(1481, 1372) end },
@@ -460,7 +460,7 @@ function caffeinateCallback(eventType)
         setTemperatureLimit(savedTemperatureLimit)
         setTurboBoost(savedTurboBoostSetting)
         setBatteryChargingLimit(savedBatteryChargingLimit)
-        setFansToAuto_user_plus()
+        setFansToAuto_user_plus(4)
         -------------------------
         refreshStatus1()
         refreshStatus2()
