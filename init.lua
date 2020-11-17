@@ -303,12 +303,12 @@ function setFansToAuto_user()
     ok = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
     if ok == true then
         hs.alert.show("Disabled a running instance of user-defined fan controller.")
-    else
-        cmd = "cd "..parentDirPathTo_smc_fan_util_Binary.."; sudo ./smc_fan_util -A"
-        ok = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
-        if ok == false then
-            hs.alert.show("Operation failed!")
-        end
+    end
+
+    cmd = "cd "..parentDirPathTo_smc_fan_util_Binary.."; sudo ./smc_fan_util -A"
+    ok = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
+    if ok == false then
+        hs.alert.show("Operation failed!")
     end
 end
 
@@ -317,12 +317,12 @@ function setFansToAuto_user_plus(offset)
     ok = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
     if ok == true then
         hs.alert.show("Disabled a running instance of user-defined fan controller.")
-    else
-        cmd = "cd "..parentDirPathTo_smc_fan_util_Binary.."; sudo ./smc_fan_util --SMC-enhanced --offset "..tostring(offset)
-        ok = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
-        if ok == false then
-            hs.alert.show("Operation failed!")
-        end
+    end
+
+    cmd = "cd "..parentDirPathTo_smc_fan_util_Binary.."; sudo ./smc_fan_util --SMC-enhanced --offset "..tostring(offset)
+    ok = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
+    if ok == false then
+        hs.alert.show("Operation failed!")
     end
 end
 
