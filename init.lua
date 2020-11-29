@@ -460,7 +460,7 @@ function caffeinateCallback(eventType)
         setTemperatureLimit(savedTemperatureLimit)
         setTurboBoost(savedTurboBoostSetting)
         setBatteryChargingLimit(savedBatteryChargingLimit)
-        setFansToAuto_user_plus(4)
+        -- setFansToAuto_user_plus(4)
         -------------------------
         refreshStatus1()
         refreshStatus2()
@@ -472,11 +472,11 @@ function caffeinateCallback(eventType)
     --     setTurboBoost(savedTurboBoostSetting)
 
     elseif (eventType == hs.caffeinate.watcher.systemWillSleep) then
-        print("systemWillSleep")
-        -- kill fan controller and set fans to auto
-        cmd = "sudo killall smc_fan_util"
-        hs.osascript.applescript(string.format('do shell script "%s"', cmd))
-        setFansToAuto()
+        -- print("systemWillSleep")
+        -- -- kill fan controller and set fans to auto
+        -- cmd = "sudo killall smc_fan_util"
+        -- hs.osascript.applescript(string.format('do shell script "%s"', cmd))
+        -- setFansToAuto()
         -------------------
     elseif (eventType == hs.caffeinate.watcher.systemWillPowerOff) then
         print("systemWillPowerOff")
