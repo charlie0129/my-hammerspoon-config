@@ -1,5 +1,5 @@
 parentDirPathToAnVMSRBinary = "~/Documents/git/AnVMSR/Release-10.15"
-parentDirPathTo_smc_fan_util_Binary = "~/Documents/git/smc_fan_util/build"
+parentDirPathTo_smc_fan_util_Binary = "~/Documents/git/charlie0129/smc_fan_util/build"
 parentDirPathToSMCUtilBinary = "~/Documents/git/macNerdsUtilities"
 
 savedTemperatureLimit = 0
