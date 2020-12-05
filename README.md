@@ -13,11 +13,11 @@ It is also recommended to disable `"sudo"` password for your account to ensure t
 - Change GPU switch modes
 
 ### Screenshots:
-<a>
-  <img align="center" src="https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/cpu.png" />
+<a herf="https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/cpu.png">
+  <img align="left" src="https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/cpu.png" />
 </a>
-<a>
-  <img align="center" src="https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/other.png" />
+<a herf="https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/other.png">
+  <img align="right" src="https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/other.png" />
 </a>
 <!--
 ![cpu](https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/cpu.png)
