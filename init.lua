@@ -61,6 +61,7 @@ menuTable2 = {
     { title = "90℃", indent = 1, fn = function() setTemperatureLimit(90); refreshStatus2() end },
     { title = "95℃", indent = 1, fn = function() setTemperatureLimit(95); refreshStatus2() end },
     { title = "100℃", indent = 1, fn = function() setTemperatureLimit(100); refreshStatus2() end },
+    { title = "Custom...", indent = 1, fn = function() setTemperatureLimit(askForTemperatureLimit()); refreshStatus2() end },
     { title = "-" }, -- TODO
     { title = "CPU Power Limit", disabled = true },
     { title = "10W", indent = 1, fn = function() setPowerLimit(10); refreshStatus2() end },
@@ -72,6 +73,7 @@ menuTable2 = {
     { title = "40W", indent = 1, fn = function() setPowerLimit(40); refreshStatus2() end },
     { title = "45W", indent = 1, fn = function() setPowerLimit(45); refreshStatus2() end },
     { title = "50W", indent = 1, fn = function() setPowerLimit(50); refreshStatus2() end },
+    { title = "Custom...", indent = 1, fn = function() setPowerLimit(askForPowerLimit()); refreshStatus2() end },
     { title = "-" },
     { title = "Intel® Turbo Boost", disabled = true },
     { title = "Enable", indent = 1, fn = function() setTurboBoost(true); refreshStatus2() end },
@@ -240,6 +242,23 @@ function getPowerLimit()
     return PL1PL2Max
 end
 
+function askForPowerLimit()
+    button, input = hs.dialog.textPrompt("Set custom power limit", "Please enter your power limit (watts)", tostring(getPowerLimit()), "OK", "Cancel")
+    if (button == "Cancel") then
+        return getPowerLimit()
+    end
+
+    input_num = math.floor(tonumber(input))
+    if (input_num < 500 and input_num > 5) then
+        return input_num
+        
+    else
+        hs.alert.show("Invalid power limit! Nothing will be changed.")
+        return getPowerLimit()
+    end
+    return getPowerLimit()
+end
+
 --FANS-----------------------------------------------------------------------------------
 
 function setFansByPercentage(integerPercentage)
@@ -397,6 +416,22 @@ function getTemperatureLimit()
     return 100 - decNum
 end
 
+function askForTemperatureLimit()
+    button, input = hs.dialog.textPrompt("Set custom temperature limit", "Please enter your temperature limit (celsius)", tostring(getTemperatureLimit()), "OK", "Cancel")
+    if (button == "Cancel") then
+        return getTemperatureLimit()
+    end
+
+    input_num = math.floor(tonumber(input))
+    if (input_num <= 100 and input_num >= 50) then
+        return input_num
+    else
+        hs.alert.show("Invalid temperature limit! Nothing will be changed.")
+        return getTemperatureLimit()
+    end
+    return getTemperatureLimit()
+end
+
 --GRAPHICS-------------------------------------------------------------------------------
 
 function setGraphicsCardAuto()
@@ -461,6 +496,7 @@ function caffeinateCallback(eventType)
         setTurboBoost(savedTurboBoostSetting)
         setBatteryChargingLimit(savedBatteryChargingLimit)
         -- setFansToAuto_user_plus(4)
+        setGraphicsCardAuto()
         -------------------------
         refreshStatus1()
         refreshStatus2()
