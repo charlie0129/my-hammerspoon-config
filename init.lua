@@ -31,12 +31,13 @@ menuTable1 = {
     { title = "100%", indent = 1, fn = function() setFansByPercentage(100) end },
     { title = "-" },
     { title = "Batt. Charge Limit", disabled = true },
-    { title = "50%", indent = 1, fn = function() setBatteryChargingLimit(50); refreshStatus1() end },
-    { title = "55%", indent = 1, fn = function() setBatteryChargingLimit(55); refreshStatus1() end },
-    { title = "60%", indent = 1, fn = function() setBatteryChargingLimit(60); refreshStatus1() end },
-    { title = "70%", indent = 1, fn = function() setBatteryChargingLimit(70); refreshStatus1() end },
-    { title = "80%", indent = 1, fn = function() setBatteryChargingLimit(80); refreshStatus1() end },
-    { title = "100%", indent = 1, fn = function() setBatteryChargingLimit(100); refreshStatus1() end },
+    { title = "50%", indent = 1, fn = function() setBatteryChargeLimit(50); refreshStatus1() end },
+    { title = "55%", indent = 1, fn = function() setBatteryChargeLimit(55); refreshStatus1() end },
+    { title = "60%", indent = 1, fn = function() setBatteryChargeLimit(60); refreshStatus1() end },
+    { title = "70%", indent = 1, fn = function() setBatteryChargeLimit(70); refreshStatus1() end },
+    { title = "80%", indent = 1, fn = function() setBatteryChargeLimit(80); refreshStatus1() end },
+    { title = "100%", indent = 1, fn = function() setBatteryChargeLimit(100); refreshStatus1() end },
+    { title = "Custom...", indent = 1, fn = function() setBatteryChargeLimit(askForBatteryChargeLimit()); refreshStatus1() end },
     { title = "-" },
     { title = "GPU Mode", disabled = true },
     { title = "Auto switch", indent = 1, fn = function() setGraphicsCardAuto(); refreshStatus1() end },
@@ -88,7 +89,7 @@ menuTable2 = {
 
 function refreshStatus1()
     currentGraphicsCardMode = getGraphicsCardMode()
-    currentBatteryChargingLimit = getBatteryChargingLimit()
+    currentBatteryChargingLimit = getBatteryChargeLimit()
     savedBatteryChargingLimit = currentBatteryChargingLimit
 
     if (currentGraphicsCardMode == 0) then
@@ -188,7 +189,7 @@ end
 
 --BATTERY--------------------------------------------------------------------------------
 
-function getBatteryChargingLimit()
+function getBatteryChargeLimit()
     cmd = "cd "..parentDirPathToSMCUtilBinary.."; sudo ./smcutil -r BCLM"
     ok,returnValue = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
     if ok == false then
@@ -200,13 +201,29 @@ function getBatteryChargingLimit()
     return batteryLimit
 end
 
-function setBatteryChargingLimit(desiredBatteryChargingLimit)
-    savedBatteryChargingLimit = desiredBatteryChargingLimit
-    cmd = "cd "..parentDirPathToSMCUtilBinary.."; sudo ./smcutil -w BCLM "..string.format("%x", desiredBatteryChargingLimit)
+function setBatteryChargeLimit(desiredBatteryChargeLimit)
+    savedBatteryChargingLimit = desiredBatteryChargeLimit
+    cmd = "cd "..parentDirPathToSMCUtilBinary.."; sudo ./smcutil -w BCLM "..string.format("%x", desiredBatteryChargeLimit)
     result = hs.osascript.applescript(string.format('do shell script "%s"', cmd))
     if result == false then
         hs.alert.show("Operation failed!")
     end
+end
+
+function askForBatteryChargeLimit()
+    button, input = hs.dialog.textPrompt("Set custom battery charge limit", "Please enter your battery charge limit (%)", tostring(getBatteryChargeLimit()), "OK", "Cancel")
+    if (button == "Cancel") then
+        return getBatteryChargeLimit()
+    end
+
+    input_num = math.floor(tonumber(input))
+    if (input_num <= 100 and input_num >= 50) then
+        return input_num
+    else
+        hs.alert.show("Invalid battery charge limit! Nothing will be changed.")
+        return getBatteryChargeLimit()
+    end
+    return getBatteryChargeLimit()
 end
 
 --POWER----------------------------------------------------------------------------------
@@ -494,7 +511,7 @@ function caffeinateCallback(eventType)
         setPowerLimit(savedPowerLimit)
         setTemperatureLimit(savedTemperatureLimit)
         setTurboBoost(savedTurboBoostSetting)
-        setBatteryChargingLimit(savedBatteryChargingLimit)
+        setBatteryChargeLimit(savedBatteryChargingLimit)
         -- setFansToAuto_user_plus(4)
         setGraphicsCardAuto()
         -------------------------
