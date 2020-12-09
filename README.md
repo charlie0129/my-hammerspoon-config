@@ -3,9 +3,9 @@
 
 Use this config with [smc_fan_util](https://github.com/charlie0129/smc_fan_util), [AnVMSR](https://www.insanelymac.com/forum/topic/341394-anvmsr-11-for-catalina-1015/) amd [smcutil](https://github.com/sicreative/BatteryStatusShow/blob/master/BatteryStatusShow/smcutil/Products/usr/local/bin/smcutil). (Maybe I will write a combined binary later) 
 
-Remember to change the path variable at the beginning of [init.lua](https://github.com/charlie0129/my-hammerspoon-config/blob/master/init.lua) to the path of the above binaries.  
+Remember to change the path variables at the beginning of [init.lua](https://github.com/charlie0129/my-hammerspoon-config/blob/master/init.lua) to the path of the above binaries.  
 
-Also, to ensure that the commands that require root privileges function properly, do any of the following:   
+Also, to ensure that the commands that require root privileges function properly, do ***any*** of the following:   
 - Include your user name and password in all the `hs.osascript.applescript` sections. 
 
   For example: 
