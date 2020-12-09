@@ -3,7 +3,7 @@
 
 - Use this config with [smc_fan_util](https://github.com/charlie0129/smc_fan_util), [AnVMSR](https://www.insanelymac.com/forum/topic/341394-anvmsr-11-for-catalina-1015/) amd [smcutil](https://github.com/sicreative/BatteryStatusShow/blob/master/BatteryStatusShow/smcutil/Products/usr/local/bin/smcutil). (Maybe I will write a combined binary later) 
   
-- Make sure you have checked the limitations of each utility above (especially [smc_fan_util](https://github.com/charlie0129/smc_fan_util), since I haven't updated it and it is only compatible with 15-inch MBPs).
+  - Make sure you have checked the limitations of each utility above (especially [smc_fan_util](https://github.com/charlie0129/smc_fan_util), since I haven't updated it and it is only compatible with 15-inch MBPs).
   - Remember to change the path variables at the beginning of [init.lua](https://github.com/charlie0129/my-hammerspoon-config/blob/master/init.lua) to the path of the above binaries.  
   
 - Also, to ensure that the commands that require root privileges function properly, do <u>***any***</u> of the following:   
