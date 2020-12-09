@@ -1,8 +1,39 @@
 # my-hammerspoon-config
-My Hammerspoon config for Mac nerds.  
-Use this config with [smc_fan_util](https://github.com/charlie0129/smc_fan_util) and [AnVMSR](https://www.insanelymac.com/forum/topic/341394-anvmsr-11-for-catalina-1015/).  
-Remember to change the variable at the beginning of [init.lua](https://github.com/charlie0129/my-hammerspoon-config/blob/master/init.lua) to your own path.  
-It is also recommended to disable `"sudo"` password for your account to ensure that the commands that require higher privileges function properly.  
+ ### My Hammerspoon config for Mac nerds.  
+
+Use this config with [smc_fan_util](https://github.com/charlie0129/smc_fan_util), [AnVMSR](https://www.insanelymac.com/forum/topic/341394-anvmsr-11-for-catalina-1015/) amd [smcutil](https://github.com/sicreative/BatteryStatusShow/blob/master/BatteryStatusShow/smcutil/Products/usr/local/bin/smcutil). (Maybe I will write a combined binary later) 
+
+Remember to change the path variable at the beginning of [init.lua](https://github.com/charlie0129/my-hammerspoon-config/blob/master/init.lua) to the path of the above binaries.  
+
+Also, to ensure that the commands that require root privileges function properly, do any of the following:   
+- Include your user name and password in all the `hs.osascript.applescript` sections. 
+
+  For example: 
+  
+  change 
+  
+  ```applescript
+  hs.osascript.applescript(string.format('do shell script "%s"', cmd))
+  ```
+  to
+  ```applescript
+  hs.osascript.applescript(string.format('do shell script "%s" password "yourpassword" with administrator privileges, cmd))
+  ```
+
+
+
+- Disable password prompts for `sudo` command.
+
+  Edit `/private/etc/sudoers` using this command: `sudo vim /private/etc/sudoers`
+
+  Find something like `root ALL = (ALL) NOPASSWD: NOPASSWD: ALL` and change the surrounding 3 lines to:
+  
+  ```shell
+  # root and users in group wheel can run anything on any machine as any user
+   root        ALL = (ALL) NOPASSWD: NOPASSWD: ALL
+ %admin      ALL = (ALL) NOPASSWD: NOPASSWD: ALL
+  ```
+  
   
 ### This config allows quick actions:  
 - Set Intel CPU temperature limit
@@ -14,10 +45,10 @@ It is also recommended to disable `"sudo"` password for your account to ensure t
 
 ### Screenshots:
 <a herf="https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/cpu.png">
-  <img align="left" height=700 src="https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/cpu.png" />
+  <img align="left" height=700 src="./img/cpu.png" />
 </a>
 <a herf="https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/other.png">
-  <img align="right" height=700 src="https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/other.png" />
+  <img align="right" height=700 src="./img/other.png" />
 </a>
 <!--
 ![cpu](https://github.com/charlie0129/my-hammerspoon-config/blob/master/img/cpu.png)
