@@ -30,8 +30,8 @@ Also, to ensure that the commands that require root privileges function properly
   
   ```shell
   # root and users in group wheel can run anything on any machine as any user
-   root        ALL = (ALL) NOPASSWD: NOPASSWD: ALL
- %admin      ALL = (ALL) NOPASSWD: NOPASSWD: ALL
+  root        ALL = (ALL) NOPASSWD: NOPASSWD: ALL
+  %admin      ALL = (ALL) NOPASSWD: NOPASSWD: ALL
   ```
   
   
