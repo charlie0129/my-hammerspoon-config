@@ -6,6 +6,7 @@ savedTemperatureLimit = 0
 savedTurboBoostSetting = false
 savedPowerLimit = 0
 savedBatteryChargingLimit = 100
+isGPUModeTemporary = false
 
 mnu1 = hs.menubar.new()
 mnu2 = hs.menubar.new()
@@ -43,6 +44,7 @@ menuTable1 = {
     { title = "Auto switch", indent = 1, fn = function() setGraphicsCardAuto(); refreshStatus1() end },
     { title = "Integrated", indent = 1, fn = function() setGraphicsCardIntegrated(); refreshStatus1() end },
     { title = "High Performance", indent = 1, fn = function() setGraphicsCardDedicated(); refreshStatus1() end },
+    { title = "Temporary Mode", indent = 1, fn = function() isGPUModeTemporary = not isGPUModeTemporary; refreshStatus1() end },
     { title = "-" },
     { title = "Refresh status", indent = 1, fn = function() refreshStatus1() end },
     { title = "-" },
@@ -133,6 +135,10 @@ function refreshStatus1()
                     menuTable1[idx + 1]["checked"] = false
                     menuTable1[idx + 2]["checked"] = false
                 end
+            end
+            -- Tick 'Temporary' label
+            if iTable["title"] == "Temporary Mode" then
+                menuTable1[idx]["checked"] = isGPUModeTemporary
             end
         end
         
@@ -513,7 +519,6 @@ function caffeinateCallback(eventType)
         setTurboBoost(savedTurboBoostSetting)
         setBatteryChargeLimit(savedBatteryChargingLimit)
         -- setFansToAuto_user_plus(4)
-        setGraphicsCardAuto()
         -------------------------
         refreshStatus1()
         refreshStatus2()
@@ -525,11 +530,13 @@ function caffeinateCallback(eventType)
     --     setTurboBoost(savedTurboBoostSetting)
 
     elseif (eventType == hs.caffeinate.watcher.systemWillSleep) then
-        -- print("systemWillSleep")
-        -- -- kill fan controller and set fans to auto
-        -- cmd = "sudo killall smc_fan_util"
-        -- hs.osascript.applescript(string.format('do shell script "%s"', cmd))
-        -- setFansToAuto()
+        print("systemWillSleep")
+        -- Revert GPU Mode to auto (if isGPUModeTemporary is true)
+        if (isGPUModeTemporary) then
+            setGraphicsCardAuto()
+            isGPUModeTemporary = false;
+        end
+
         -------------------
     elseif (eventType == hs.caffeinate.watcher.systemWillPowerOff) then
         print("systemWillPowerOff")
@@ -537,7 +544,11 @@ function caffeinateCallback(eventType)
         cmd = "sudo killall smc_fan_util"
         hs.osascript.applescript(string.format('do shell script "%s"', cmd))
         setFansToAuto()
-        -------------------
+        -- Revert GPU Mode to auto (if isGPUModeTemporary is true)
+        if (isGPUModeTemporary) then
+            setGraphicsCardAuto()
+            isGPUModeTemporary = false;
+        end
     end
 end
 
