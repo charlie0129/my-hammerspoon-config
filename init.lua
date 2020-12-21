@@ -217,7 +217,7 @@ function setBatteryChargeLimit(desiredBatteryChargeLimit)
 end
 
 function askForBatteryChargeLimit()
-    button, input = hs.dialog.textPrompt("Set custom battery charge limit", "Please enter your battery charge limit (%)", tostring(getBatteryChargeLimit()), "OK", "Cancel")
+    button, input = hs.dialog.textPrompt("Set custom battery charge limit...", "Please enter the number your desired (%)", tostring(getBatteryChargeLimit()), "OK", "Cancel")
     if (button == "Cancel") then
         return getBatteryChargeLimit()
     end
@@ -266,7 +266,7 @@ function getPowerLimit()
 end
 
 function askForPowerLimit()
-    button, input = hs.dialog.textPrompt("Set custom power limit", "Please enter your power limit (watts)", tostring(getPowerLimit()), "OK", "Cancel")
+    button, input = hs.dialog.textPrompt("Set custom power limit...", "Please enter the number your desired (watts)", tostring(getPowerLimit()), "OK", "Cancel")
     if (button == "Cancel") then
         return getPowerLimit()
     end
@@ -440,7 +440,7 @@ function getTemperatureLimit()
 end
 
 function askForTemperatureLimit()
-    button, input = hs.dialog.textPrompt("Set custom temperature limit", "Please enter your temperature limit (celsius)", tostring(getTemperatureLimit()), "OK", "Cancel")
+    button, input = hs.dialog.textPrompt("Set custom temperature limit...", "Please enter the number your desired (celsius)", tostring(getTemperatureLimit()), "OK", "Cancel")
     if (button == "Cancel") then
         return getTemperatureLimit()
     end
