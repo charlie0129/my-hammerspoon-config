@@ -107,6 +107,7 @@ function refreshStatus1()
     mnu1:setTitle(tostring(currentBatteryChargingLimit)..tostring(graphicsModeChar))
 
     local isAfterFanSpeed = false
+    local hasTickedChargeLimit = false
     for idx, iTable in pairs(menuTable1) do
         if string.sub(iTable["title"], 1, 4) == "Batt" then
             isAfterFanSpeed = true
@@ -116,10 +117,12 @@ function refreshStatus1()
             if string.sub(iTable["title"], -1) == "%" then
                 if iTable["title"] == tostring(currentBatteryChargingLimit).."%" then
                     iTable["checked"] = true
+                    hasTickedChargeLimit = true
                 else
                     iTable["checked"] = false
                 end
             end
+
             -- Tick graphics card mode
             if iTable["title"] == "Auto switch" then
                 if (currentGraphicsCardMode == 0) then
@@ -136,9 +139,17 @@ function refreshStatus1()
                     menuTable1[idx + 2]["checked"] = false
                 end
             end
+
             -- Tick 'Temporary' label
             if iTable["title"] == "Temporary Mode" then
                 menuTable1[idx]["checked"] = isGPUModeTemporary
+            end
+
+            -- Tick "Custom..."
+            if iTable["title"] == "Custom..." then
+                if (string.sub(menuTable1[idx - 1]["title"], -1) == "%") then
+                    iTable["checked"] = not hasTickedChargeLimit
+                end
             end
         end
         
@@ -238,7 +249,7 @@ function askForBatteryChargeLimit()
     end
 
     input_num = math.floor(tonumber(input))
-    if (input_num <= 100 and input_num >= 50) then
+    if (input_num <= 100 and input_num >= 40) then
         return input_num
     else
         hs.alert.show("Invalid battery charge limit! Nothing will be changed.")
