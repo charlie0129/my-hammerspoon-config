@@ -249,7 +249,7 @@ function askForBatteryChargeLimit()
     end
 
     input_num = math.floor(tonumber(input))
-    if (input_num <= 100 and input_num >= 40) then
+    if (input_num <= 100 and input_num >= 30) then
         return input_num
     else
         hs.alert.show("Invalid battery charge limit! Nothing will be changed.")
