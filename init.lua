@@ -32,7 +32,7 @@ menuTable1 = {
     { title = "100%", indent = 1, fn = function() setFansByPercentage(100) end },
     { title = "-" },
     { title = "Batt. Charge Limit", disabled = true },
-    { title = "40%", indent = 1, fn = function() setBatteryChargeLimit(40); refreshStatus1() end },
+    { title = "37%", indent = 1, fn = function() setBatteryChargeLimit(37); refreshStatus1() end },
     { title = "50%", indent = 1, fn = function() setBatteryChargeLimit(50); refreshStatus1() end },
     { title = "60%", indent = 1, fn = function() setBatteryChargeLimit(60); refreshStatus1() end },
     { title = "70%", indent = 1, fn = function() setBatteryChargeLimit(70); refreshStatus1() end },
